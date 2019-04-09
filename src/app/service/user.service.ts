@@ -3,11 +3,9 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from "rxjs/operators";
 
-import { User } from './user';
+import { User } from '../model/user';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class UserService {
     private url = '/api/v1/users';
 
@@ -15,6 +13,14 @@ export class UserService {
 
     getUsers(): Observable<User[]> {
         return this.http.get<User[]>(this.url)
+                .pipe(
+                    tap(data => console.log('All: ' + JSON.stringify(data))), 
+                    catchError(this.handleError)
+                );
+    }
+
+    getUser(username: string): Observable<User> {
+        return this.http.get<User>(this.url+"/"+username)
                 .pipe(
                     tap(data => console.log('All: ' + JSON.stringify(data))), 
                     catchError(this.handleError)

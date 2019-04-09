@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UsersListComponent } from './users-list/users-list.component';
 import { RouterModule } from '@angular/router';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [
-    UsersListComponent,
+  declarations: [   
     UserDetailsComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     RouterModule.forChild([
-      { path: 'users', component: UsersListComponent }
+      { path: 'user:username', component: UserDetailsComponent }
     ]),
   ]
 })

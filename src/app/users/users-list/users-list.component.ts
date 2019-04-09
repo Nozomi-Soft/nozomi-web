@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
-import { User } from '../user';
+import { User } from '../../model/user';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-users-list',
@@ -22,6 +22,6 @@ export class UsersListComponent implements OnInit {
       },
       error => this.errorMessage = <any>error,
     );
-}
+  }
 
 }
