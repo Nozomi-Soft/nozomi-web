@@ -43,11 +43,14 @@
         Log In
       </button>
       <div class="dropdown-menu">
-        <form class="px-4 py-3"  #form="ngForm" novalidate>
+        <form class="px-4 py-3"  #formSing="ngForm" novalidate>
           <div class="form-group">
-            <label for="formEmail">Email address</label>
-            <input type="email" required class="form-control" id="formEmail" placeholder="email@example.com" 
+            <label for="email">Email address</label>
+            <input #email="ngModel" type="email" class="form-control" id="email" placeholder="email@example.com" 
                     name="email" [(ngModel)]="login.email">
+            <div class="alert alert-danger" *ngIf="email.invalid && email.dirty">
+              e-mail required
+            </div>
           </div>
           <div class="form-group">
             <label for="formPassword1">Password</label>
@@ -55,7 +58,8 @@
                   name="password" [(ngModel)]="login.password">
           </div>
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="dropdownCheck">
+            <input type="checkbox" class="form-check-input" id="dropdownCheck"
+                    name="remember" [(ngModel)]="login.remember">
             <label class="form-check-label" for="dropdownCheck">
               Remember me
             </label>
@@ -63,8 +67,8 @@
           <button type="submit" class="btn btn-primary">Sign in</button>
         </form>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">New around here? Sign up</a>
-        <a class="dropdown-item" href="#">Forgot password?</a>
+        <a class="dropdown-item" href="/new-user">New around here? Sign up</a>
+        <a class="dropdown-item" href="/reset">Forgot password?</a>
       </div>
     </div>
   </div>
