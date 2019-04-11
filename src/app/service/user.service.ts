@@ -7,35 +7,45 @@ import { User } from '../model/user';
 
 @Injectable()
 export class UserService {
-    private url = '/api/v1/users';
+    private urlUsers = '/api/v1/users';
+    private urlUser = '/api/v1/user';
+
+    currentUser: User;
 
     constructor(private http: HttpClient){}
 
     getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.url)
-                .pipe(
-                    tap(data => console.log('All: ' + JSON.stringify(data))), 
-                    catchError(this.handleError)
-                );
+        return this.http.get<User[]>(this.urlUsers)
+            .pipe(tap (data => this.extractData), 
+                catchError(this.handleError));
     }
 
-    getUser(username: string): Observable<User> {
-        return this.http.get<User>(this.url+"/"+username)
-                .pipe(
-                    tap(data => console.log('All: ' + JSON.stringify(data))), 
-                    catchError(this.handleError)
-                );
+    getUser(paramValue: string, paramName: string): Observable<User> {
+        return this.http.get<User>(this.urlUsers + "?" + paramName + "=" + paramValue)
+            .pipe(tap (data => this.extractData), 
+                catchError(this.handleError));
     }
 
-    private handleError(err: HttpErrorResponse) {
-        let errorMessage = '';
-        if (err.error instanceof ErrorEvent) {
-            errorMessage = `An error occurred: ${err.error.message}`;
-        } else {
-            errorMessage = `Server returned code: ${err.status}, error message is ${err.message}`;
-        }
-        console.error(errorMessage);
+    createUser(user: User) {
+        let body = JSON.stringify(user);
+        let headers = new HttpHeaders({ 'Content-Type' : 'application/json' });
 
-        return throwError(errorMessage);
+        return this.http.post(this.urlUser, body, { headers : headers })
+            .pipe(tap (data => this.extractData), 
+                catchError(this.handleError));
+    }
+
+    private handleError(error: any) {
+        console.log('post error: ', error);
+        return throwError(error.statusText + ': ' + error.status) ;
+    }
+
+    private extractData(data: any) {
+        console.log('All: ' + JSON.stringify(data));
+        return JSON.stringify(data);
+    }
+
+    isAuthenticated() {
+        return !!this.currentUser;
     }
 }

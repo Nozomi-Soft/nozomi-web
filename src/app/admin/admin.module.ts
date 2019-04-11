@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
-import { UsersListComponent } from '../users/users-list/users-list.component';
 import { SharedModule } from '../shared/shared.module';
+import { UsersListComponent } from './users-list/users-list.component';
 
 const routes: Routes = [
   {

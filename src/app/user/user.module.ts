@@ -11,8 +11,8 @@ import { NewUserComponent } from './new-user/new-user.component';
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: 'user:username', component: UserDetailsComponent },
-      { path: 'new-user', component: NewUserComponent }
+      { path: 'profile:username', component: UserDetailsComponent },
+      { path: 'new-user', component: NewUserComponent },
     ]),
   ]
 })

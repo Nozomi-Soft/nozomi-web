@@ -1,0 +1,99 @@
+<form #formUser="ngForm" (ngSubmit)="submitForm(formUser)" novalidate>
+
+  <app-alert-error #alertError [errorMessage]="errorMessage"></app-alert-error>
+  <app-alert-success #alertSuccess [successMessage]="successMessage"></app-alert-success>
+
+  <div class="row">
+    <div class="col">
+      <label for="username">Username:</label>
+      <input id="username" #username="ngModel" required type="username" 
+              class="form-control" [class.is-invalid]="username.invalid && username.touched"
+              placeholder="Username" name="username" [(ngModel)]="user.username">
+      <div class="invalid-feedback" *ngIf="username.invalid && username.touched">
+          username is required
+      </div>
+    </div>
+    <div class="col">
+      <label for="name">First Name:</label>
+      <input id="name" #firstName="ngModel" required type="text"
+              class="form-control" [class.is-invalid]="firstName.invalid && password.touched"
+              placeholder="First name" name="firstName" [(ngModel)]="user.name">
+    </div>
+    <div class="col">
+      <label for="lastName">Last name:</label>
+      <input id="lastName" #lastName required type="text" 
+              class="form-control" [class.is-invalid]="lastName.invalid && lastName.touched" 
+              placeholder="Last name" name="lastName" [(ngModel)]="user.lastName">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col">
+      <label for="userEmail">E-mail:</label>
+      <input id="userEmail" #email="ngModel" required type="email" 
+              class="form-control" [class.is-invalid]="email.invalid && email.touched"
+              placeholder="email@example.com" name="userEmail" [(ngModel)]="user.email" 
+              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$">
+      <div class="invalid-feedback" *ngIf="email.invalid && email.touched">
+        e-mail is required
+      </div>
+    </div>
+    <div class="col">
+      <label for="userEmail2">E-mail:</label>
+      <input id="userEmail2" #email2="ngModel" required type="email" 
+              class="form-control" [class.is-invalid]="email2.invalid && email2.touched"
+              placeholder="email@example.com" name="userEmail2" [(ngModel)]="user.email" 
+              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$">
+      <div class="invalid-feedback" *ngIf="email2.invalid && email2.touched">
+        e-mail is required
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+        <label for="password">Password:</label>
+        <input id="password" #password="ngModel" required type="password" 
+                class="form-control" [class.is-invalid]="password.invalid && password.touched"
+                placeholder="Password" name="password" [(ngModel)]="user.password">
+        <div class="invalid-feedback" *ngIf="password.invalid && password.touched">
+          password is required
+        </div>
+    </div>
+    <div class="col">
+        <label for="password2">Password:</label>
+        <input id="password2" #password2="ngModel" required type="password" 
+                class="form-control" [class.is-invalid]="password2.invalid && password2.touched"
+                placeholder="Password" name="password2" [(ngModel)]="user.password">
+        <div class="invalid-feedback" *ngIf="password2.invalid && password2.touched">
+          password is required
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <label for="inputLang">Language:</label>
+      <select id="inputLang" #inputLang
+              class="form-control" [class.is-invalid]="languageError"
+              (change)="validateLang(inputLang.value)"
+              name="inputLang" [(ngModel)]="user.location.language">
+        <option value="">Select...</option>
+        <option *ngFor="let lang of languages" [value]="lang.code">{{lang.value}}</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="inputCountry">Country:</label>
+      <select id="inputCountry" #inputCountry
+              class="form-control" [class.is-invalid]="countryError"
+              (change)="validateCountry(inputCountry.value)"
+              name="inputCountry" [(ngModel)]="user.location.country">
+        <option value="">Select...</option>
+        <option *ngFor="let cty of countries" [value]="cty.code">{{cty.value}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row pt-4">
+    <div class="col">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+        <button type="button" class="btn btn-primary ml-4" (click)="btnCancelClick();">Cancel</button>
+    </div>
+  </div>
+</form>

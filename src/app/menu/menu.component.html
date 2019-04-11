@@ -3,7 +3,8 @@
       <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
     Navbar
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   
@@ -11,13 +12,18 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" [routerLink]="['/home']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact:true}">
+            Home <span class="sr-only">(current)</span>
+        </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Admin
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -37,16 +43,23 @@
       <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
     </form>
 
-    
-    <div class="btn-group dropleft ml-2">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="navbar-brand ml-4" [routerLink]="['/profile', user.username]" *ngIf="user != null">
+      <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt="">
+          Welcome {{user.name}}!!
+    </a>
+
+    <div class="btn-group dropleft ml-4" *ngIf="user == null || user == undefined">
+      <button type="button" id="loginBtn" class="btn btn-outline-primary dropdown-toggle" 
+              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Log In
       </button>
       <div class="dropdown-menu">
-        <form class="px-4 py-3"  #formSing="ngForm" novalidate>
+        <form class="px-4 py-3"  #formSign="ngForm" (ngSubmit)="login(formSign)" novalidate>
+          <app-alert-error #alertError [errorMessage]="errorMessage"></app-alert-error>
           <div class="form-group">
             <label for="email">Email address</label>
-            <input #email="ngModel" type="email" class="form-control" id="email" placeholder="email@example.com" 
+            <input #email="ngModel" type="email" required
+                    class="form-control" id="email" placeholder="email@example.com" 
                     name="email" [(ngModel)]="login.email">
             <div class="alert alert-danger" *ngIf="email.invalid && email.dirty">
               e-mail required
@@ -54,7 +67,8 @@
           </div>
           <div class="form-group">
             <label for="formPassword1">Password</label>
-            <input type="password" required class="form-control" id="formPassword1" placeholder="Password" 
+            <input type="password" required class="form-control" required
+                  id="formPassword1" placeholder="Password" 
                   name="password" [(ngModel)]="login.password">
           </div>
           <div class="form-check">
@@ -64,7 +78,9 @@
               Remember me
             </label>
           </div>
-          <button type="submit" class="btn btn-primary">Sign in</button>
+          <button type="submit" class="btn btn-primary">
+                  Sign in
+          </button>
         </form>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="/new-user">New around here? Sign up</a>

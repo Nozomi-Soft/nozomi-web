@@ -5,6 +5,18 @@ export class User {
     name: string;
     lastName: string;
     email: string;
-    role: string;
+    location: Location;
+    role: string[] = [];
     status: string;
+
+    constructor() {
+        this.location = new Location();
+        this.status = "INACTIVE";
+    }
+    
+}
+
+export class Location {
+    country: string = '';
+    language: string = '';
 }
