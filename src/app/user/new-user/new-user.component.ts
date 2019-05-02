@@ -64,6 +64,7 @@ export class NewUserComponent implements OnInit {
       
     }
 
+    this.user.roles = ['USER'];
     this.userService.createUser(this.user)
         .subscribe(
           data => {

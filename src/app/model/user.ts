@@ -6,7 +6,7 @@ export class User {
     lastName: string;
     email: string;
     location: Location;
-    role: string[] = [];
+    roles: string[] = [];
     status: string;
 
     constructor() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from "rxjs/operators";
 
@@ -7,10 +7,10 @@ import { User } from '../model/user';
 
 @Injectable()
 export class UserService {
-    private urlUsers = '/api/v1/users';
-    private urlUser = '/api/v1/user';
+    private urlUsers = '/rest-user/api/v1/users';
+    private urlUser = '/rest-user/api/v1/user';
 
-    currentUser: User;
+    public currentUser: User;
 
     constructor(private http: HttpClient){}
 

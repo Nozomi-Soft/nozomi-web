@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { UserService } from './service/user.service';
 import { AdminModule } from './admin/admin.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthenticationService } from './service/authentication.service';
 
 
 @NgModule({
@@ -26,7 +27,11 @@ import { SharedModule } from './shared/shared.module';
     AdminModule,
     UserModule        
   ],
-  providers: [UserService],
+  providers: [
+    AuthenticationService,
+    UserService
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

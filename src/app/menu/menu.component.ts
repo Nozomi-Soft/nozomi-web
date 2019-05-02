@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import * as $ from 'jquery';
-import { UserService } from 'src/app/service/user.service';
+import { AuthenticationService } from 'src/app/service/authentication.service';
+import { AuthenticationUser } from '../model/auth-user';
 import { User } from '../model/user';
 
 @Component({
@@ -11,33 +12,36 @@ import { User } from '../model/user';
 })
 export class MenuComponent implements OnInit {
 
-  private email: string;
-  private password: string;
+  userLogin: AuthenticationUser = new AuthenticationUser();
   errorMessage: string = '';
-  private user: User;
+  currentUser: User;
 
-  constructor(private userService: UserService) { }
-
-  ngOnInit() {
-    this.user = this.userService.currentUser;
+  constructor(private authenticationService: AuthenticationService) { 
+    this.authenticationService.currentUser.subscribe(user => {
+      this.currentUser = user;
+    });
   }
 
-  login(form: NgForm) : void{
+  ngOnInit() {
+  }
+
+  login(form: NgForm){
     if( form.controls["email"].invalid || form.controls["password"].invalid) {
       this.errorMessage = "valid email or password are required";
       $('#loginBtn').click();
       return;
     }
-    
-    this.userService.getUser(this.email, 'email').subscribe(
+ 
+    this.authenticationService.login( this.userLogin )
+    .subscribe(
       data => {
         console.log(data);
-        this.user = data;
-        this.userService.currentUser = data;
+        this.currentUser = data;
       },
       error => {
         console.log(error);
         this.errorMessage + "error";
+        $('#loginBtn').click();
       }
     );
 
